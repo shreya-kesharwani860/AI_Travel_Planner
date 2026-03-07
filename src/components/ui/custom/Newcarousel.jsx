@@ -21,17 +21,17 @@ const Newcarousel = () => {
 
   const destinations = [
     {
-      image: "/public/mexicofood.jpg",
+      image: "/mexicofood.jpg",
       title: "Mexico City, Mexico",
       description: "The city of beautiful beaches and opera.",
     },
     {
-      image: "/public/italyfood.jpg",
+      image: "/italyfood.jpg",
       title: "Rome, Italy",
       description: "A perfect blend of tradition and modernity.",
     },
     {
-      image: "/public/spainfood.jpg",
+      image: "/spainfood.jpg",
       title: "Barcelona, Spain",
       description: "The city of love and lights.",
     },

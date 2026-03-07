@@ -21,17 +21,17 @@ const Carousel = () => {
 
   const destinations = [
     {
-      image: "/public/paris.jpg",
+      image: "/paris.jpg",
       title: "Paris, France",
       description: "The city of love and lights.",
     },
     {
-      image: "/public/newyork.jpg",
+      image: "/newyork.jpg",
       title: "New York, USA",
       description: "The city that never sleeps.",
     },
     {
-      image: "/public/dubai.jpg",
+      image: "/dubai.jpg",
       title: "Dubai, UAE",
       description: "Luxury and futuristic skyline.",
     },
