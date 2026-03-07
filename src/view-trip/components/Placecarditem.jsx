@@ -17,8 +17,6 @@ function Placecarditem({ place }) {
 />
         <div>
           <h2 className='font-bold text-lg text-black'>{place.placeName}</h2>
-          <p className='text-sm text-gray-400'>{place.placeDetails}</p>
-          <h2 className='mt-2 text-sm'>🕑 {place.TimeTravel}</h2>
         </div>
       </div>
     </Link>

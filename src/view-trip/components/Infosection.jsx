@@ -3,71 +3,77 @@ import React, { useEffect, useState } from 'react'
 import { IoIosSend } from "react-icons/io"
 
 function Infosection({ trip }) {
-    // Start with a generic travel placeholder
-    const [photoUrl, setPhotoUrl] = useState('https://loremflickr.com/800/600/landscape');
 
-    useEffect(() => {
-        if (trip?.userselection?.location) {
-            // Clean up the location name (take first two words for better search matching)
-            const cleanLocation = trip.userselection.location.split(',')[0].split(' ').slice(0, 2).join(',');
-            
-            // Build the LoremFlickr URL
-            // keywords: location + 'city' + 'landscape'
-            // lock: unique string based on the location name to keep it consistent
-            const dynamicUrl = `https://loremflickr.com/800/600/${encodeURIComponent(cleanLocation)},city,landscape/all?lock=${trip.userselection.location.length}`;
-            
-            setPhotoUrl(dynamicUrl);
-        }
-    }, [trip]);
+  const [photoUrl, setPhotoUrl] = useState('https://loremflickr.com/1600/900/landscape');
 
-    return (
-    <div className='mt-10'>
+  useEffect(() => {
+    if (trip?.userselection?.location) {
 
-        <img 
-            src={photoUrl} 
-            key={photoUrl}
-            referrerPolicy="no-referrer"
-            className='h-[320px] w-full object-cover rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.5)]'
-            alt="Trip Destination"
-            onError={(e) => {
-                e.target.src = 'https://loremflickr.com/800/600/travel,city';
-            }}
-        />
+      const cleanLocation = trip.userselection.location
+        .split(',')[0]
+        .split(' ')
+        .slice(0,2)
+        .join(',');
 
-        <div className='flex justify-between items-center mt-6 flex-wrap gap-6'>
+      const dynamicUrl =
+        `https://loremflickr.com/1600/900/${encodeURIComponent(cleanLocation)},city,landscape/all?lock=${trip.userselection.location.length}`;
 
-            <div className='flex flex-col gap-3'>
+      setPhotoUrl(dynamicUrl);
+    }
+  }, [trip]);
+  
+  return (
 
-                <h2 className='font-bold text-3xl text-white tracking-wide'>
-                    {trip?.userselection?.location}
-                </h2>
+    <div
+      className="w-full min-h-[70vh] flex items-center justify-center px-6 bg-cover bg-center relative"
+      style={{ backgroundImage: `url(${photoUrl})` }}
+    >
 
-                <div className='flex gap-4 flex-wrap'>
+      {/* Dark Overlay */}
 
-                    <h2 className='px-4 py-1.5 bg-white/20 backdrop-blur-md border border-white/20 rounded-full text-white text-xs md:text-sm shadow-sm'> 
-                        🗓️ {trip?.userselection?.days} Day
-                    </h2>
+      <div className="absolute inset-0 bg-black/50"></div>
 
-                    <h2 className='px-4 py-1.5 bg-white/20 backdrop-blur-md border border-white/20 rounded-full text-white text-xs md:text-sm shadow-sm'> 
-                        💵 {trip?.userselection?.budget} Budget
-                    </h2>
+      {/* Content */}
 
-                    <h2 className='px-4 py-1.5 bg-white/20 backdrop-blur-md border border-white/20 rounded-full text-white text-xs md:text-sm shadow-sm'> 
-                        ✈️ {trip?.userselection?.traveler} Traveler
-                    </h2>
+      <div className="relative flex flex-col items-center text-center gap-8 max-w-4xl">
 
-                </div>
+        <h1 className="text-white text-[56px] md:text-[64px] font-bold tracking-tight">
+          {trip?.userselection?.location}
+        </h1>
 
-            </div>
+        <p className="text-white/80 text-lg max-w-2xl">
+          Your AI generated travel itinerary with curated hotels,
+          places to visit and optimized routes.
+        </p>
 
-            <Button className="rounded-full px-5 py-3 bg-gradient-to-r from-orange-500 to-pink-500 hover:scale-105 transition-all shadow-lg">
-                <IoIosSend className="text-lg"/>
-            </Button>
+        {/* Trip Details */}
+
+        <div className="flex flex-wrap justify-center gap-4">
+
+          <div className="px-6 py-2 bg-white/20 backdrop-blur-md rounded-full text-white">
+            🗓️ {trip?.userselection?.days} Days
+          </div>
+
+          <div className="px-6 py-2 bg-white/20 backdrop-blur-md rounded-full text-white">
+            💰 {trip?.userselection?.budget} Budget
+          </div>
+
+          <div className="px-6 py-2 bg-white/20 backdrop-blur-md rounded-full text-white">
+            ✈️ {trip?.userselection?.traveler} Traveler
+          </div>
 
         </div>
 
+        <Button className="px-8 py-5 rounded-full bg-yellow-400 text-black font-semibold hover:scale-105 hover:bg-yellow-300 transition flex items-center gap-2">
+          <IoIosSend />
+          Share Trip
+        </Button>
+
+      </div>
+
     </div>
-)
+
+  )
 }
 
 export default Infosection

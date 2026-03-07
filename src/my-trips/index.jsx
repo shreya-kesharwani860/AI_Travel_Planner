@@ -26,52 +26,65 @@ function index() {
         });
     }
   return (
-  <div
-    className="w-full min-h-screen flex justify-center px-5 sm:px-10 md:px-24 lg:px-40 xl:px-56 py-16 bg-cover bg-center relative"
-    style={{
-      backgroundImage:
-        "url('https://images.unsplash.com/photo-1469474968028-56623f02e42e')"
-    }}
-  >
+  <div className="min-h-screen bg-[#f7f7f5] py-20">
 
-    <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/25 to-black/10"></div>
+    <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-14">
 
-    <div className="relative w-full max-w-7xl">
+      {/* Section Header */}
 
-      <h2 className="text-4xl font-extrabold text-white">
-        My Trips
-      </h2>
+      <div className="text-center mb-16">
 
-      <p className="text-gray-200 mt-2">
-        View and manage all your AI generated travel plans
-      </p>
+        <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+          My Trips
+        </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-12">
+        <p className="text-gray-600 mt-3 text-lg">
+          View and manage all your AI generated travel plans
+        </p>
 
-  {usertrips?.length > 0
-    ? usertrips.map((trip, index) => (
-        <div
-          key={index}
-          className="rounded-2xl p-4 bg-white/15 backdrop-blur-sm border border-white/20
-          shadow-lg hover:scale-105 hover:bg-white/20 transition-all duration-300"
-        >
-          <Usertripcarditem trip={trip} />
-        </div>
-      ))
-    : [1,2,3,4,5,6].map((item, index) => (
-        <div
-          key={index}
-          className="h-[250px] w-full rounded-2xl bg-white/15 backdrop-blur-sm
-          border border-white/20 animate-pulse"
-        ></div>
-      ))
-  }
+      </div>
 
-</div>
+      {/* Trips Grid */}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+
+        {usertrips?.length > 0
+          ? usertrips.map((trip, index) => (
+              <div
+                key={index}
+                className="
+                bg-white
+                rounded-2xl
+                p-5
+                shadow-md
+                hover:shadow-xl
+                hover:-translate-y-1
+                transition-all
+                duration-300
+                "
+              >
+                <Usertripcarditem trip={trip} />
+              </div>
+            ))
+          : [1,2,3,4,5,6].map((item, index) => (
+              <div
+                key={index}
+                className="
+                h-[260px]
+                w-full
+                rounded-2xl
+                bg-white
+                shadow-md
+                animate-pulse
+                "
+              ></div>
+            ))}
+      </div>
+
     </div>
 
   </div>
-)
+);
 }
 
 export default index

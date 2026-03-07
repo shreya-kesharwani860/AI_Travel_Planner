@@ -1,68 +1,51 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '../button'
 import { Link } from 'react-router-dom'
 
 function Hero() {
+  const images = [
+    "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e",
+    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+    "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
+    "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
+  ]
+
+  const [currentImage, setCurrentImage] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length)
+    }, 2800)
+
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <div
-      className="w-full min-h-[92vh] flex items-center justify-center px-6 bg-cover bg-center relative"
+      className="w-full min-h-[92vh] flex items-center justify-center px-6 bg-cover bg-center relative transition-all duration-1000"
       style={{
-        backgroundImage:
-          "url('https://images.unsplash.com/photo-1469474968028-56623f02e42e')"
+        backgroundImage: `url(${images[currentImage]})`
       }}
     >
 
-      <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/20"></div>
+      <div className="absolute inset-0 bg-black/50"></div>
 
-      <div className="relative max-w-5xl text-center flex flex-col items-center gap-8 p-14 rounded-[30px] bg-white/10 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.4)] border border-white/20">
+      <div className="relative flex flex-col items-center text-center gap-8 max-w-5xl w-full">
 
-   <h1 className="font-extrabold text-[56px] leading-tight tracking-tight text-white">
+        <h1 className="text-white text-[64px] font-bold tracking-tight">
+          Explore the World with AI
+        </h1>
 
-  <span className="block">
-    Discover Your Next Adventure with AI
-  </span>
-
-  <span className="block mt-3 text-white/85 text-[42px] font-semibold">
-    Personalized Itineraries at Your Fingertips
-  </span>
-
-</h1>
-
-        <p className="text-lg md:text-xl text-gray-200 max-w-2xl leading-relaxed">
-          Your personal AI travel planner that creates smart itineraries,
-          discovers hidden destinations, and plans trips perfectly based on
-          your interests and budget.
+        <p className="text-white/80 text-lg max-w-2xl leading-relaxed">
+          Discover hidden destinations, generate personalized travel itineraries,
+          and plan the perfect trip using AI powered travel intelligence.
         </p>
 
         <Link to={'/create-trip'}>
-          <Button className="px-10 py-6 text-lg font-semibold rounded-full bg-gradient-to-r from-orange-500 via-pink-500 to-red-500 hover:scale-110 hover:shadow-[0_10px_40px_rgba(255,100,100,0.6)] transition-all duration-300">
-            Start Planning Your Trip ✈️
+          <Button className="px-10 py-5 rounded-full bg-yellow-400 text-black font-semibold hover:scale-105 hover:bg-yellow-300 transition">
+            Discover My Area 🌍
           </Button>
         </Link>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mt-6 text-white">
-
-          <div className="flex flex-col items-center gap-2 hover:scale-110 transition">
-            <span className="text-4xl">🌍</span>
-            <p className="text-sm text-white/80">Smart Destinations</p>
-          </div>
-
-          <div className="flex flex-col items-center gap-2 hover:scale-110 transition">
-            <span className="text-4xl">🧭</span>
-            <p className="text-sm text-white/80">AI Itineraries</p>
-          </div>
-
-          <div className="flex flex-col items-center gap-2 hover:scale-110 transition">
-            <span className="text-4xl">💰</span>
-            <p className="text-sm text-white/80">Budget Planning</p>
-          </div>
-
-          <div className="flex flex-col items-center gap-2 hover:scale-110 transition">
-            <span className="text-4xl">✈️</span>
-            <p className="text-sm text-white/80">Easy Travel</p>
-          </div>
-
-        </div>
 
       </div>
 

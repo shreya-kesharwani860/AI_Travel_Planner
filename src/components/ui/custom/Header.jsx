@@ -12,16 +12,31 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import axios from 'axios';
 
 function Header() {
+
   const user = JSON.parse(localStorage.getItem('user'));
   const [opendailog,setopendailog]=useState(false)
 
+  const [scrolled,setScrolled] = useState(false)
+
   useEffect(() => {
     console.log(user)
+
+    const handleScroll = () => {
+      if(window.scrollY > 10){
+        setScrolled(true)
+      }else{
+        setScrolled(false)
+      }
+    }
+
+    window.addEventListener("scroll",handleScroll)
+
+    return () => window.removeEventListener("scroll",handleScroll)
+
   }, [])
 
   const login = useGoogleLogin({
@@ -47,7 +62,12 @@ const Getuserprofile=(tokeninfo)=>{
   }
 
   return (
-  <div className='sticky top-0 z-50 backdrop-blur-lg bg-white/80 border-b shadow-sm flex justify-between items-center px-6 py-3'>
+
+  <div
+  className={`sticky top-0 z-50 flex justify-between items-center px-6 py-3 transition-all duration-300
+  ${scrolled ? "bg-white shadow-md border-b" : "bg-transparent"}
+  `}
+  >
 
     {/* Logo */}
     <div className='flex items-center gap-2'>
@@ -82,7 +102,6 @@ const Getuserprofile=(tokeninfo)=>{
           <Popover>
             <PopoverTrigger asChild>
 
-              {/* User Profile Image */}
               <img
                 src={user?.picture}
                 className='h-[40px] w-[40px] rounded-full cursor-pointer border-2 border-white shadow-md hover:scale-110 transition-all'

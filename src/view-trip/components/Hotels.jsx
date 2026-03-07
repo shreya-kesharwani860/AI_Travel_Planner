@@ -2,75 +2,116 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function Hotels({ trip }) {
-  return (
-  <div className='mt-12'>
+ return (
 
-    <div className='mb-8 flex items-center gap-4'>
+  <div>
 
-      <div className='w-1 h-10 bg-gradient-to-b from-orange-400 to-pink-500 rounded-full'></div>
+    {/* Section Header */}
 
-      <div>
-        <h2 className='text-2xl font-semibold text-white tracking-wide'>
-          Hotel Recommendations
-        </h2>
+    <div className='mb-14 text-center'>
 
-        <p className='text-sm text-gray-200'>
-          Best stays near your destination
-        </p>
-      </div>
+      <h2 className='text-4xl font-bold text-gray-900'>
+        Hotel Recommendations
+      </h2>
+
+      <p className='text-gray-600 mt-3 text-lg'>
+        Best stays near your destination
+      </p>
 
     </div>
 
-    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6'>
+    {/* Hotels List */}
+
+    <div className='flex flex-col gap-8'>
 
       {trip.tripData?.hotels?.map((hotel, index) => (
-        <Link
+
+        <div
           key={index}
-          to={'https://www.google.com/maps/search/?api=1&query=' + hotel.HotelName + "," + hotel?.HotelAddress}
-          target='_blank'
+          className='group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row'
         >
 
-          <div className='bg-white/90 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 cursor-pointer'>
+          {/* Image Container */}
+
+          <div className='relative md:w-[300px] overflow-hidden'>
 
             <img
               src={`https://loremflickr.com/400/300/${encodeURIComponent((hotel?.HotelName || 'hotel').split(' ').slice(0, 2).join(','))},hotel/all?lock=${index}`}
-              className='h-[180px] w-full object-cover'
-              alt={hotel?.HotelName || "hotel"}
-              onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1566073771259-6a8506099945' }}
+              className='h-[220px] w-full object-cover transition-transform duration-500 group-hover:scale-105'
+              alt={hotel?.HotelName || hotel?.hotelOptions || "hotel"}
+              onError={(e) => {
+                e.target.src = 'https://images.unsplash.com/photo-1566073771259-6a8506099945'
+              }}
             />
 
-            <div className='p-4 flex flex-col gap-1'>
+            {/* Rating Badge */}
 
-              <h2 className='font-semibold text-gray-900 text-lg'>
+            <div className='absolute top-3 right-3 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-semibold shadow'>
+              ⭐ {hotel?.Rating}
+            </div>
+
+          </div>
+
+          {/* Hotel Info */}
+
+          <div className='p-6 flex flex-col justify-between flex-1'>
+
+            <div className='flex flex-col gap-3'>
+
+              {/* Name */}
+
+              <h3 className='text-xl font-semibold text-gray-900'>
                 {hotel?.HotelName}
-              </h2>
+              </h3>
 
-              <h2 className='text-sm text-gray-600'>
+              {/* Description */}
+
+              <p className='text-sm text-gray-600 line-clamp-3'>
+                {hotel?.Description}
+              </p>
+
+              {/* Address */}
+
+              <p className='text-sm text-gray-500'>
                 📍 {hotel?.HotelAddress}
-              </h2>
+              </p>
 
-              <div className='flex justify-between mt-2 text-sm'>
+              {/* Price Badge */}
 
-                <span className='text-green-600 font-medium'>
+              <div className='mt-2'>
+
+                <span className='bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full font-medium'>
                   💰 {hotel?.Price}
-                </span>
-
-                <span className='text-yellow-500 font-medium'>
-                  ⭐ {hotel?.Rating}
                 </span>
 
               </div>
 
             </div>
 
+            {/* Map Button */}
+
+            <button
+              onClick={() =>
+                openMap(
+                  hotel?.geo_coordinates?.latitude,
+                  hotel?.geo_coordinates?.longitude
+                )
+              }
+              className='mt-5 w-fit bg-gray-900 text-white text-sm px-5 py-2 rounded-lg hover:bg-black transition'
+            >
+              View on Map
+            </button>
+
           </div>
 
-        </Link>
+        </div>
+
       ))}
 
     </div>
 
   </div>
-)
+
+  )
 }
 export default Hotels

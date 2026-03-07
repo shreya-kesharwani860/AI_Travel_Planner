@@ -27,31 +27,23 @@ function ViewTrip() {
         }
     }
   return (
-  <div
-    className="w-full min-h-screen flex justify-center px-5 sm:px-10 md:px-24 lg:px-40 xl:px-56 py-16 bg-cover bg-center relative"
-    style={{
-      backgroundImage:
-        "url('https://images.unsplash.com/photo-1469474968028-56623f02e42e')"
-    }}
-  >
 
-    <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/25 to-black/10"></div>
+    <div className="w-full bg-[#f7f7f1]">
 
-    <div className="relative w-full max-w-7xl bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl shadow-xl p-10">
+      <Infosection trip={trip}/>
 
-      <div className="space-y-16">
+      <div className="max-w-6xl mx-auto px-6 py-24 space-y-24">
 
-        <Infosection trip={trip}/>
         <Hotels trip={trip}/>
         <Places trip={trip}/>
-        <Footer trip={trip}/>
 
       </div>
 
+      <Footer trip={trip}/>
+
     </div>
 
-  </div>
-)
+  )
 }
 
 export default ViewTrip
