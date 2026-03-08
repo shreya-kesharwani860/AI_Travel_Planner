@@ -32,7 +32,7 @@ function Hotels({ trip }) {
 
     <div className='flex flex-col gap-8'>
 
-      {trip.tripData?.hotels?.map((hotel, index) => (
+      {(trip.tripData?.hotels || trip.tripData?.hotelOptions)?.map((hotel, index) => (
 
         <div
           key={index}
@@ -44,19 +44,21 @@ function Hotels({ trip }) {
           <div className='relative md:w-[300px] overflow-hidden'>
 
             <img
-  src={
-    hotel?.HotelImageUrl && !hotel?.HotelImageUrl.includes("example.com")
-      ? hotel.HotelImageUrl
-      : `https://loremflickr.com/600/400/${encodeURIComponent(
-          hotel?.HotelName || "luxury hotel"
-        )},hotel,resort?lock=${index}`
-  }
-  className="h-[220px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
-  alt={hotel?.HotelName || "Hotel"}
-  onError={(e) => {
-    e.target.src = `https://loremflickr.com/600/400/hotel,resort?lock=${Math.random()*1000}`
-  }}
-/>
+              src={
+                hotel?.HotelImageUrl ||
+                hotel?.["hotel image url"] ||
+                (hotel?.HotelImageUrl && !hotel?.HotelImageUrl.includes("example.com")
+                  ? hotel.HotelImageUrl
+                  : `https://loremflickr.com/600/400/${encodeURIComponent(
+                      hotel?.HotelName || hotel?.hotelName || "luxury hotel"
+                    )},hotel,resort?lock=${index}`)
+              }
+              className="h-[220px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              alt={hotel?.HotelName || hotel?.hotelName || "Hotel"}
+              onError={(e) => {
+                e.target.src = `https://loremflickr.com/600/400/hotel,resort?lock=${Math.random()*1000}`
+              }}
+            />
 
             {/* Rating Badge */}
 
@@ -81,13 +83,13 @@ function Hotels({ trip }) {
               {/* Description */}
 
               <p className='text-sm text-gray-600 line-clamp-3'>
-                {hotel?.description || hotel?.Description}
+                {hotel?.description || hotel?.Description || hotel?.descriptions}
               </p>
 
               {/* Address */}
 
               <p className='text-sm text-gray-500'>
-                📍 {hotel?.hotelAddress || hotel?.HotelAddress}
+                📍 {hotel?.hotelAddress || hotel?.HotelAddress || hotel?.["Hotel address"]}
               </p>
 
               {/* Price Badge */}
@@ -107,7 +109,10 @@ function Hotels({ trip }) {
             <button
                 onClick={(e) => {
                   e.stopPropagation()
-                  openMap(hotel?.HotelName || hotel?.hotelName, hotel?.HotelAddress || hotel?.hotelAddress)
+                  openMap(
+                    hotel?.HotelName || hotel?.hotelName,
+                    hotel?.HotelAddress || hotel?.hotelAddress || hotel?.["Hotel address"]
+                  )
                 }}
                 className='mt-5 w-fit bg-gray-900 text-white text-sm px-5 py-2 rounded-lg hover:bg-black transition'
               >
