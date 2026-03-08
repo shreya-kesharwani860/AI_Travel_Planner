@@ -4,24 +4,18 @@ import { IoIosSend } from "react-icons/io"
 
 function Infosection({ trip }) {
 
-  const [photoUrl, setPhotoUrl] = useState('https://loremflickr.com/1600/900/landscape');
+  const [photoUrl, setPhotoUrl] = useState("")
 
   useEffect(() => {
-    if (trip?.userselection?.location) {
+    if (trip?.id) {
 
-      const cleanLocation = trip.userselection.location
-        .split(',')[0]
-        .split(' ')
-        .slice(0,2)
-        .join(',');
+      // generate unique image for each trip
+      const imageUrl = `https://picsum.photos/1600/900?random=${trip.id}`
 
-      const dynamicUrl =
-        `https://loremflickr.com/1600/900/${encodeURIComponent(cleanLocation)},city,landscape/all?lock=${trip.userselection.location.length}`;
-
-      setPhotoUrl(dynamicUrl);
+      setPhotoUrl(imageUrl)
     }
-  }, [trip]);
-  
+  }, [trip])
+
   return (
 
     <div
@@ -29,12 +23,10 @@ function Infosection({ trip }) {
       style={{ backgroundImage: `url(${photoUrl})` }}
     >
 
-      {/* Dark Overlay */}
-
+      {/* Overlay */}
       <div className="absolute inset-0 bg-black/50"></div>
 
       {/* Content */}
-
       <div className="relative flex flex-col items-center text-center gap-8 max-w-4xl">
 
         <h1 className="text-white text-[56px] md:text-[64px] font-bold tracking-tight">
@@ -45,8 +37,6 @@ function Infosection({ trip }) {
           Your AI generated travel itinerary with curated hotels,
           places to visit and optimized routes.
         </p>
-
-        {/* Trip Details */}
 
         <div className="flex flex-wrap justify-center gap-4">
 

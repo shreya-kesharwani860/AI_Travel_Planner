@@ -1,6 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+const openMap = (name, address) => {
+    const query = encodeURIComponent(`${name} ${address}`)
+    window.open(
+      `https://www.google.com/maps/search/?api=1&query=${query}`,
+      "_blank"
+    )
+  }
+
 function Hotels({ trip }) {
  return (
 
@@ -36,18 +44,24 @@ function Hotels({ trip }) {
           <div className='relative md:w-[300px] overflow-hidden'>
 
             <img
-              src={`https://loremflickr.com/400/300/${encodeURIComponent((hotel?.HotelName || 'hotel').split(' ').slice(0, 2).join(','))},hotel/all?lock=${index}`}
-              className='h-[220px] w-full object-cover transition-transform duration-500 group-hover:scale-105'
-              alt={hotel?.HotelName || hotel?.hotelOptions || "hotel"}
-              onError={(e) => {
-                e.target.src = 'https://images.unsplash.com/photo-1566073771259-6a8506099945'
-              }}
-            />
+  src={
+    hotel?.HotelImageUrl && !hotel?.HotelImageUrl.includes("example.com")
+      ? hotel.HotelImageUrl
+      : `https://loremflickr.com/600/400/${encodeURIComponent(
+          hotel?.HotelName || "luxury hotel"
+        )},hotel,resort?lock=${index}`
+  }
+  className="h-[220px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+  alt={hotel?.HotelName || "Hotel"}
+  onError={(e) => {
+    e.target.src = `https://loremflickr.com/600/400/hotel,resort?lock=${Math.random()*1000}`
+  }}
+/>
 
             {/* Rating Badge */}
 
             <div className='absolute top-3 right-3 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-semibold shadow'>
-              ⭐ {hotel?.Rating}
+              ⭐ {hotel?.rating || hotel?.Rating}
             </div>
 
           </div>
@@ -61,19 +75,19 @@ function Hotels({ trip }) {
               {/* Name */}
 
               <h3 className='text-xl font-semibold text-gray-900'>
-                {hotel?.HotelName}
+                {hotel?.hotelName || hotel?.HotelName}
               </h3>
 
               {/* Description */}
 
               <p className='text-sm text-gray-600 line-clamp-3'>
-                {hotel?.Description}
+                {hotel?.description || hotel?.Description}
               </p>
 
               {/* Address */}
 
               <p className='text-sm text-gray-500'>
-                📍 {hotel?.HotelAddress}
+                📍 {hotel?.hotelAddress || hotel?.HotelAddress}
               </p>
 
               {/* Price Badge */}
@@ -81,7 +95,7 @@ function Hotels({ trip }) {
               <div className='mt-2'>
 
                 <span className='bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full font-medium'>
-                  💰 {hotel?.Price}
+                  💰 {hotel?.price || hotel?.Price}
                 </span>
 
               </div>
@@ -91,14 +105,12 @@ function Hotels({ trip }) {
             {/* Map Button */}
 
             <button
-              onClick={() =>
-                openMap(
-                  hotel?.geo_coordinates?.latitude,
-                  hotel?.geo_coordinates?.longitude
-                )
-              }
-              className='mt-5 w-fit bg-gray-900 text-white text-sm px-5 py-2 rounded-lg hover:bg-black transition'
-            >
+                onClick={(e) => {
+                  e.stopPropagation()
+                  openMap(hotel?.HotelName || hotel?.hotelName, hotel?.HotelAddress || hotel?.hotelAddress)
+                }}
+                className='mt-5 w-fit bg-gray-900 text-white text-sm px-5 py-2 rounded-lg hover:bg-black transition'
+              >
               View on Map
             </button>
 

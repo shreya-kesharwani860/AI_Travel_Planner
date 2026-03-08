@@ -43,19 +43,19 @@ function Places({trip}) {
                     <div className="flex flex-col gap-3">
                       {/* Place Details Text */}
                       <p className="text-sm text-gray-600 line-clamp-3">
-                        {place.placeDetails}
+                        {place.placeDetails || place.PlaceDetails}
                       </p>
 
                       {/* Travel Info Badges */}
                       <div className="flex flex-wrap gap-3 text-sm mt-2">
                         <span className="bg-gray-100 px-3 py-1 rounded-full">
-                          ⏰ {place.best_time_to_visit || place.bestTimeToVisit}
+                          ⏰ {place.best_time_to_visit || place.BestTimeToVisit || place.bestTimeToVisit}
                         </span>
                         <span className="bg-gray-100 px-3 py-1 rounded-full">
-                          🕒 {place.timeTravel}
+                          🕒 {place.timeTravel || place.TimeTravel}
                         </span>
                         <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">
-                          🎟 {place.ticketPricing}
+                          🎟 {place.ticketPricing || place.ticketPricing || place.TicketPricing }
                         </span>
                       </div>
                     </div>
